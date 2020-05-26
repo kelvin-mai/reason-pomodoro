@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<Timer />, "root");
+ReactDOMRe.renderToElementWithId(<App />, "root");
