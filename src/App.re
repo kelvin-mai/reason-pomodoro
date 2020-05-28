@@ -10,17 +10,38 @@ let make = () => {
     Some(() => Js.Global.clearInterval(timerId));
   });
 
+  Js.log(state);
+
   <div>
+    <h1>
+      {s("Time to ")}
+      <span>
+        {switch (state.currentPhase) {
+         | Work => s("work")
+         | Play => s("play")
+         }}
+      </span>
+    </h1>
     <Timer seconds={state.seconds} />
     {state.isTicking
-       ? <button onClick={_event => dispatch(Stop)}> {s("STOP")} </button>
+       ? <button onClick={_ => dispatch(Stop)}> {s("STOP")} </button>
        : <>
-           <button label="START" onClick={_event => dispatch(Start)}>
+           <button label="START" onClick={_ => dispatch(Start)}>
              {s("START")}
            </button>
-           <button label="RESET" onClick={_event => dispatch(Reset)}>
+           <button label="RESET" onClick={_ => dispatch(Reset)}>
              {s("RESET")}
            </button>
          </>}
+    <EditTime
+      phase="Work"
+      onChange={e => dispatch(SetTime(Work, e))}
+      value={state.workTime}
+    />
+    <EditTime
+      phase="Break"
+      onChange={e => dispatch(SetTime(Play, e))}
+      value={state.playTime}
+    />
   </div>;
 };
