@@ -13,26 +13,20 @@ let make = () => {
   Js.log(state);
 
   <div>
-    <h1>
-      {s("Time to ")}
-      <span>
-        {switch (state.currentPhase) {
-         | Work => s("work")
-         | Play => s("play")
-         }}
-      </span>
-    </h1>
+    <Header seconds={state.seconds} currentPhase={state.currentPhase} />
     <Timer seconds={state.seconds} />
-    {state.isTicking
-       ? <button onClick={_ => dispatch(Stop)}> {s("STOP")} </button>
-       : <>
-           <button label="START" onClick={_ => dispatch(Start)}>
-             {s("START")}
+    <div>
+      <button label="RESET" onClick={_ => dispatch(Reset)}>
+        <span className="fas fa-stop" />
+      </button>
+      {state.isTicking
+         ? <button onClick={_ => dispatch(Stop)}>
+             <span className="fas fa-pause" />
            </button>
-           <button label="RESET" onClick={_ => dispatch(Reset)}>
-             {s("RESET")}
-           </button>
-         </>}
+         : <button label="START" onClick={_ => dispatch(Start)}>
+             <span className="fas fa-play" />
+           </button>}
+    </div>
     <EditTime
       phase="Work"
       onChange={e => dispatch(SetTime(Work, e))}

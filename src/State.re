@@ -2,12 +2,6 @@ type phase =
   | Work
   | Play;
 
-let togglePhase = phase =>
-  switch (phase) {
-  | Work => Play
-  | Play => Work
-  };
-
 type state = {
   seconds: int,
   isTicking: bool,
@@ -21,6 +15,7 @@ type action =
   | Stop
   | Reset
   | Tick
+  | TogglePhase
   | SetTime(phase, int);
 
 let initialState = {
@@ -42,6 +37,21 @@ let reducer = (state, action) =>
     switch (state.currentPhase) {
     | Work => {...state, seconds: state.workTime * 60}
     | Play => {...state, seconds: state.playTime * 60}
+    }
+  | TogglePhase =>
+    switch (state.currentPhase) {
+    | Work => {
+        ...state,
+        seconds: state.playTime * 60,
+        currentPhase: Play,
+        isTicking: true,
+      }
+    | Play => {
+        ...state,
+        seconds: state.workTime * 60,
+        currentPhase: Work,
+        isTicking: true,
+      }
     }
   | SetTime(p, i) =>
     switch (p) {
