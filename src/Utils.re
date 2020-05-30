@@ -1,16 +1,16 @@
-let padNumber = numString =>
-  if (numString |> int_of_string < 10) {
-    "0" ++ numString;
+let s = str => React.string(str);
+
+let padNumber = num =>
+  if (int_of_string(num) < 10) {
+    "0" ++ num;
   } else {
-    numString;
+    num;
   };
 
 let formatTime = seconds => {
   let mins = seconds / 60;
-  let minsString = mins |> string_of_int |> padNumber;
-  let seconds = seconds mod 60;
-  let secondsString = seconds |> string_of_int |> padNumber;
-  minsString ++ ":" ++ secondsString;
+  let secs = seconds mod 60;
+  let minStr = mins |> string_of_int |> padNumber;
+  let secStr = secs |> string_of_int |> padNumber;
+  minStr ++ ":" ++ secStr;
 };
-
-let s = str => ReasonReact.string(str);

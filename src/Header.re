@@ -1,8 +1,8 @@
-open Utils;
 open State;
+open Utils;
 
 [@react.component]
-let make = (~seconds, ~currentPhase) => {
+let make = (~seconds, ~currentPhase, ~dispatch) => {
   let label =
     seconds > 0
       ? switch (currentPhase) {
@@ -15,7 +15,8 @@ let make = (~seconds, ~currentPhase) => {
         | Play => "Ready to start working?"
         }
       );
-  <h1 onClick={seconds == 0 ? _ => Js.log("dispatch") : (_ => ())}>
+
+  <h1 onClick={seconds == 0 ? _ => dispatch(TogglePhase) : (_ => ())}>
     {s(label)}
   </h1>;
 };
